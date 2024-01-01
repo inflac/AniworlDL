@@ -119,7 +119,7 @@ def downloade_from_m3u8(title:str, path:str, m3u8_url:str):
 
 
 def download_episode(episode, streamer, path:str, proxy:dict):
-    print(f'[{get_time_formated(timeformat="%H:%M")}] Downloading episode: [{BLUE}{episode.episode_num}{RESET}] by streamer: [{BLUE}{streamer.name}{RESET}]')
+    print(f'[{get_time_formated(timeformat="%H:%M")}] Downloading episode: [{BLUE}{episode.episode_num}{RESET}] from streamer: [{BLUE}{streamer.name}{RESET}]')
     req = requests.get(streamer.url, proxies=proxy)
     if req.status_code != 200:
         print(f'[{RED}ERROR{RESET}] Requesting the episodes stream url returend a status code: {BLUE}{req.status_code}{RESET}')

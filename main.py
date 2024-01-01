@@ -31,7 +31,7 @@ def stop_program(signum, frame, q):
         q.task_done()
     print(f"[{GREEN}Done{RESET}]")
 
-    print(f'[{get_time_formated(timeformat="%H:%M")}] Clearing threads: ', end="") #Join every thread for cleanup
+    print(f'[{get_time_formated(timeformat="%H:%M")}] Clearing threads ', end="") #Join every thread for cleanup
     for thread in threads:
             thread.join()
             threads.remove(thread)
