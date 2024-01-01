@@ -40,7 +40,7 @@ def stop_program(signum, frame, q):
 
     print(f'[{get_time_formated(timeformat="%H:%M")}] Bye') #Say good bye ^^
 
-def download_controller(anime:str, q:queue, path:str): 
+def download_controller(anime:str, q:queue, path:str, proxy:dict): 
     global threads_semaphore
 
     if get_stop_indicator():
@@ -48,11 +48,11 @@ def download_controller(anime:str, q:queue, path:str):
     try:
         episode = q.get(timeout=1)
         for streamer in episode.streaming_services: #While episodes download isn't successful, try other streaming services
-            req = requests.get(streamer.url)
+            req = requests.get(streamer.url, proxies=proxy)
             if req.status_code != 200: #Check if episode of streamer is up
                 continue
             else:
-                if download_episode(episode, streamer, path) == True: #If download fails, continue the loop and try another streamer
+                if download_episode(episode, streamer, path, proxy) == True: #If download fails, continue the loop and try another streamer
                     q.task_done()
                     threads_semaphore.release()
                     return True
@@ -64,12 +64,12 @@ def download_controller(anime:str, q:queue, path:str):
     except queue.Empty: #Return True in case the queue is empty
         return True
 
-def thread_operator(anime:str, q:queue, threads_amount:int, path:str):
+def thread_operator(anime:str, q:queue, threads_amount:int, path:str, proxy:dict):
     global threads, threads_semaphore
 
     while int(q.qsize()) != 0: #For every queue element, create a thread. passivly wait while max num of threads is reached
         threads_semaphore.acquire()
-        thread = threading.Thread(target=download_controller, args=(anime, q, path))
+        thread = threading.Thread(target=download_controller, args=(anime, q, path, proxy))
         threads.append(thread)
         thread.start()
         
@@ -82,9 +82,9 @@ def thread_operator(anime:str, q:queue, threads_amount:int, path:str):
             stop_program(None, None, q)
             return
 
-def startup(anime=None, season=None, episode=None, threads_amount=None, path=None):
+def startup(anime=None, season=None, episode=None, threads_amount=None, path=None, proxy=None):
     #Get episode Links with for all Hosters of an episode
-    episodes = get_episodes_links(anime=anime, season=season, episode=episode)
+    episodes = get_episodes_links(anime=anime, season=season, episode=episode, proxy=proxy)
     
     #Put Episodes into a queue
     q = queue.Queue()
@@ -96,7 +96,7 @@ def startup(anime=None, season=None, episode=None, threads_amount=None, path=Non
     signal.signal(signal.SIGINT, lambda sig, frame: stop_program(sig, frame, q))
 
     #Start threads with downloading tasks
-    thread_operator(anime, q, threads_amount, path)
+    thread_operator(anime, q, threads_amount, path, proxy)
     
 def main():
     global threads_semaphore
@@ -109,6 +109,7 @@ def main():
     parser.add_argument('-e', '--episode', help='Episode to download')
     parser.add_argument('-p', '--path', required=True, type=str, help='Location where the downloaded episodes get stored')
     parser.add_argument('-t', '--threads', type=int, default=2, help='Amount of threads')
+    parser.add_argument('-x', '--proxy', type=str, default=None, help='enter an http proxys IP address')
 
     args = parser.parse_args()
     anime = args.anime
@@ -116,11 +117,17 @@ def main():
     episode = args.episode
     threads = args.threads
     path = args.path
+    proxy_ip = args.proxy
 
-    threads_semaphore = threading.Semaphore(threads)
+    if proxy_ip != None: #Configure proxy dict
+        proxy = {'http': 'http://' + proxy_ip + ':80'}
+    else:
+        proxy = None
 
-    parameter_checks(anime, season, episode, threads, path)
-    startup(anime=anime, season=season, episode=episode, threads_amount=threads, path=path)
+    threads_semaphore = threading.Semaphore(threads) #create a semaphore with the maximum amount of threads 
+
+    parameter_checks(anime, season, episode, threads, path, proxy_ip)
+    startup(anime=anime, season=season, episode=episode, threads_amount=threads, path=path, proxy=proxy)
 
 if __name__ == '__main__':
     main()
