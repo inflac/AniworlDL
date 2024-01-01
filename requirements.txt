@@ -1,0 +1,12 @@
+requests
+time
+threading
+argparse
+queue
+signal
+queue
+bs4
+platform
+re
+time
+ffmpeg
