@@ -35,3 +35,19 @@ options:
   -t THREADS, --threads THREADS
                         Amount of threads
 ```
+
+## Supported streaming services
+| streaming service | Supported |
+|-------------------|-----------|
+| VOE               | ❌        |
+| Doodstream        | ❌        |
+| Vidoza            | ✅        |
+| Streamtape        | ✅        |
+
+## ToDo
+| Feature           | Status      |
+|-------------------|-------------|
+| VOE               | working     |
+| Doodstream        | not planned |
+| movies            | planned     |
+| languages         | planned     |

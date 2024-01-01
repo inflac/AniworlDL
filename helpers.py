@@ -8,7 +8,7 @@ from bs4 import BeautifulSoup
 from Episode import Episode
 import threading
 
-
+#Color Codes
 RED = '\033[91m'
 GREEN = '\033[92m'
 YELLOW = '\033[93m'
@@ -18,10 +18,10 @@ CYAN = '\033[96m'
 WHITE = '\033[97m'
 RESET = '\033[0m'
 
-STOP_THREADS = False
-THREAD_DATA = {}
+STOP_THREADS = False #Indicator showing if the program should get terminated
+THREAD_DATA = {} #Dictionary to collect data about the downloading progress
 
-data_update_mutex = threading.Lock()
+data_update_mutex = threading.Lock() #Mutex to lock writing in THREAD_DATA
 
 def get_time_formated(timeformat=None):
     if timeformat == None:

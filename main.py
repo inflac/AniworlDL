@@ -14,7 +14,7 @@ threads_semaphore = None
 # Function to gracefully stop the program on CTRL + C
 def stop_program(signum, frame, q):
     global threads, threads_semaphore
-    if not get_stop_indicator():
+    if not get_stop_indicator(): #In case the program already handles a stop signal, do not run this function again
         set_stop_indicator()
     else:
         return
@@ -24,21 +24,21 @@ def stop_program(signum, frame, q):
     else:
         print("Internal Call for program termination.")
 
-    print(f'[{get_time_formated(timeformat="%H:%M")}] Clearing queue ', end="")
+    print(f'[{get_time_formated(timeformat="%H:%M")}] Clearing queue ', end="") #Empty the queue to avoid new threads get started
     q.mutex
     while not q.empty():
         q.get()
         q.task_done()
     print(f"[{GREEN}Done{RESET}]")
 
-    print(f'[{get_time_formated(timeformat="%H:%M")}] Clearing threads: ', end="")
+    print(f'[{get_time_formated(timeformat="%H:%M")}] Clearing threads: ', end="") #Join every thread for cleanup
     for thread in threads:
             thread.join()
             threads.remove(thread)
             threads_semaphore.release()
     print(f"[{GREEN}Done{RESET}]")
 
-    print(f'[{get_time_formated(timeformat="%H:%M")}] Bye')
+    print(f'[{get_time_formated(timeformat="%H:%M")}] Bye') #Say good bye ^^
 
 def download_controller(anime:str, q:queue, path:str): 
     global threads_semaphore
@@ -47,7 +47,7 @@ def download_controller(anime:str, q:queue, path:str):
         return
     try:
         episode = q.get(timeout=1)
-        for streamer in episode.streaming_services:
+        for streamer in episode.streaming_services: #While episodes download isn't successful, try other streaming services
             req = requests.get(streamer.url)
             if req.status_code != 200: #Check if episode of streamer is up
                 continue
@@ -67,19 +67,20 @@ def download_controller(anime:str, q:queue, path:str):
 def thread_operator(anime:str, q:queue, threads_amount:int, path:str):
     global threads, threads_semaphore
 
-    while int(q.qsize()) != 0:
+    while int(q.qsize()) != 0: #For every queue element, create a thread. passivly wait while max num of threads is reached
         threads_semaphore.acquire()
         thread = threading.Thread(target=download_controller, args=(anime, q, path))
         threads.append(thread)
         thread.start()
         
-        for thread in threads:
+        for thread in threads: #For every active thread, check if he is still alive, otherwise join it.
             if not thread.is_alive():
                 thread.join()
                 threads.remove(thread)
 
-        if get_stop_indicator():
+        if get_stop_indicator(): #In case CTRL + C was detected, terminate the program
             stop_program(None, None, q)
+            return
 
 def startup(anime=None, season=None, episode=None, threads_amount=None, path=None):
     #Get episode Links with for all Hosters of an episode
