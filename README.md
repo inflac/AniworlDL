@@ -19,7 +19,7 @@ A multithreading anime downloader for aniworld.to. Simply download a single epis
 * [CLI] Start the downloader with `python main.py -a anime_name -s season_number -t amount_of_threads -p path/where/to/store/the/files`
 
 ```
-usage: main.py [-h] -a ANIME -s SEASON [-e EPISODE] -p PATH [-t THREADS]
+usage: main.py [-h] -a ANIME -s SEASON [-e EPISODE] -p PATH [-t THREADS] [-x PROXY]
 
 A simple program with argparse
 
@@ -34,6 +34,8 @@ options:
   -p PATH, --path PATH  Location where the downloaded episodes get stored
   -t THREADS, --threads THREADS
                         Amount of threads
+  -x PROXY, --proxy PROXY
+                        enter an https proxys IP address (e.x 182.152.157.1:80)
 ```
 
 ## Supported streaming services
