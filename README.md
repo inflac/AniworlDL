@@ -21,8 +21,6 @@ A multithreading anime downloader for aniworld.to. Simply download a single epis
 ```
 usage: main.py [-h] -a ANIME -s SEASON [-e EPISODE] -p PATH [-t THREADS] [-x PROXY]
 
-A simple program with argparse
-
 options:
   -h, --help            show this help message and exit
   -a ANIME, --anime ANIME
