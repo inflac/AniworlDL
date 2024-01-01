@@ -84,13 +84,14 @@ def thread_operator(anime:str, q:queue, threads_amount:int, path:str, proxy:dict
 
 def startup(anime=None, season=None, episode=None, threads_amount=None, path=None, proxy=None):
     #Get episode Links with for all Hosters of an episode
+    print(f'[{get_time_formated(timeformat="%H:%M")}] Episodes queued ', end='', flush=True)
     episodes = get_episodes_links(anime=anime, season=season, episode=episode, proxy=proxy)
     
     #Put Episodes into a queue
     q = queue.Queue()
     for episode in episodes:
         q.put(episode)
-    print(f'[{get_time_formated(timeformat="%H:%M")}] Episodes queued [{GREEN}Done{RESET}]')
+    print(f'[{GREEN}Done{RESET}]')
     
     # Register signal handler for Ctrl + C
     signal.signal(signal.SIGINT, lambda sig, frame: stop_program(sig, frame, q))
