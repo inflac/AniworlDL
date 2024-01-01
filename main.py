@@ -98,24 +98,32 @@ def startup(anime=None, season=None, episode=None, threads_amount=None, path=Non
     #Start threads with downloading tasks
     thread_operator(anime, q, threads_amount, path, proxy)
     
-def main():
+def main(anime:str, season:int, episode:int, threads:int, path:str, proxy:dict):
     global threads_semaphore
     print_header()
     print(f'[{get_time_formated(timeformat="%H:%M")}] AniworldDL started')
 
+    threads_semaphore = threading.Semaphore(threads) #create a semaphore with the maximum amount of threads 
+
+    parameter_checks(anime, season, episode, threads, path, proxy)
+    startup(anime=anime, season=season, episode=episode, threads_amount=threads, path=path, proxy=proxy)
+
+
+
+if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='A simple program with argparse')
     parser.add_argument('-a', '--anime', required=True, help='Specify the anime name')
     parser.add_argument('-s', '--season', required=True, type=int, default=1, help='Season to download')
     parser.add_argument('-e', '--episode', help='Episode to download')
     parser.add_argument('-p', '--path', required=True, type=str, help='Location where the downloaded episodes get stored')
     parser.add_argument('-t', '--threads', type=int, default=2, help='Amount of threads')
-    parser.add_argument('-x', '--proxy', type=str, default=None, help='enter an https proxys IP address (e.x 182.152.157.1:80)')
+    parser.add_argument('-x', '--proxy', type=str, default=None, help='enter an https proxys IP address (e.x 182.152.157.1:8080)')
 
     args = parser.parse_args()
     anime = args.anime
     season = args.season
     episode = args.episode
-    threads = args.threads
+    thread_amount = args.threads
     path = args.path
     proxy_ip = args.proxy
 
@@ -124,10 +132,4 @@ def main():
     else:
         proxy = None
 
-    threads_semaphore = threading.Semaphore(threads) #create a semaphore with the maximum amount of threads 
-
-    parameter_checks(anime, season, episode, threads, path, proxy)
-    startup(anime=anime, season=season, episode=episode, threads_amount=threads, path=path, proxy=proxy)
-
-if __name__ == '__main__':
-    main()
+    main(anime, season, episode, thread_amount, path, proxy)

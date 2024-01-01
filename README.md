@@ -35,7 +35,7 @@ options:
   -t THREADS, --threads THREADS
                         Amount of threads
   -x PROXY, --proxy PROXY
-                        enter an https proxys IP address (e.x 182.152.157.1:80)
+                        enter an https proxys IP address (e.x 182.152.157.1:8080)
 ```
 
 ## Supported streaming services
