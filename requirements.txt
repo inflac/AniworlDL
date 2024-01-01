@@ -1,12 +1,2 @@
 beautifulsoup4>=4.12.2
 requests>=2.31.0
-time
-threading
-argparse
-queue
-signal
-queue
-platform
-re
-time
-ffmpeg
