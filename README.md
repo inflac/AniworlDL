@@ -18,3 +18,20 @@ A multithreading anime downloader for aniworld.to. Simply download a single epis
 * [EXE] Start the downloader by double clicking the main.exe file
 * [CLI] Start the downloader with `python main.py -a anime_name -s season_number -t amount_of_threads -p path/where/to/store/the/files`
 
+```
+usage: main.py [-h] -a ANIME -s SEASON [-e EPISODE] -p PATH [-t THREADS]
+
+A simple program with argparse
+
+options:
+  -h, --help            show this help message and exit
+  -a ANIME, --anime ANIME
+                        Specify the anime name
+  -s SEASON, --season SEASON
+                        Season to download
+  -e EPISODE, --episode EPISODE
+                        Episode to download
+  -p PATH, --path PATH  Location where the downloaded episodes get stored
+  -t THREADS, --threads THREADS
+                        Amount of threads
+```
