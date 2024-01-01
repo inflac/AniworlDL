@@ -67,7 +67,8 @@ def get_stop_indicator():
 
 def update_download_data():
     global THREAD_DATA
-    for key, value in THREAD_DATA.items():
+    items = THREAD_DATA.items()
+    for key, value in items:
         print(f"{key}: {value[1]}/{value[0]}, ", end="")
     print("", end="\r")
     
@@ -81,16 +82,12 @@ def get_episodes_links(anime=None, season="", episode="", proxy=None):
     soup = BeautifulSoup(req.content, 'html.parser')
     episodes = soup.find_all('tr', {'itemprop': 'episode'})
 
-    i = 0
     for episode in episodes:
         episode_id = episode['data-episode-id']
         episode_name = episode.find('strong').text.strip()
         episode_num = episode.find('a').text.strip()
         episode_url = "https://aniworld.to/" + str(episode.find('a', itemprop='url')['href'])
         episodes_elem.append(Episode(episode_id, episode_name, episode_num, episode_url))
-        i += 1
-        if i == 3:
-            break #TODO SECURES SMAL REQUESTS FOR TESTING
     return episodes_elem
 
 def download_from_url(title:str, url:str, proxy:dict):
