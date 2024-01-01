@@ -35,12 +35,13 @@ def print_header():
         print("")
     return
 
-def parameter_checks(anime:str, season:int, episode:int, threads:int, path:str, proxy:str):
+def parameter_checks(anime:str, season:int, episode:int, threads:int, path:str, proxy:dict):
     if proxy != None:
-        req = requests.get(proxy)
+        req = requests.get("https://inflacsan.de", proxies=proxy)
         if req.status_code != 200:
             print(f"{RED}ERROR{RESET}: The given proxy returend status code: {BLUE}{req.status_code}{RESET} insted of {BLUE}200{RESET}.")
             exit(1)
+        pass
 
     req = requests.get("https://aniworld.to/anime/stream/" + anime, proxies=proxy)
     if "messageAlert danger" in str(req.content):

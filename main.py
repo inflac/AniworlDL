@@ -109,7 +109,7 @@ def main():
     parser.add_argument('-e', '--episode', help='Episode to download')
     parser.add_argument('-p', '--path', required=True, type=str, help='Location where the downloaded episodes get stored')
     parser.add_argument('-t', '--threads', type=int, default=2, help='Amount of threads')
-    parser.add_argument('-x', '--proxy', type=str, default=None, help='enter an http proxys IP address')
+    parser.add_argument('-x', '--proxy', type=str, default=None, help='enter an https proxys IP address (e.x 182.152.157.1:80)')
 
     args = parser.parse_args()
     anime = args.anime
@@ -120,13 +120,13 @@ def main():
     proxy_ip = args.proxy
 
     if proxy_ip != None: #Configure proxy dict
-        proxy = {'http': 'http://' + proxy_ip + ':80'}
+        proxy = {'https': 'https://' + proxy_ip}
     else:
         proxy = None
 
     threads_semaphore = threading.Semaphore(threads) #create a semaphore with the maximum amount of threads 
 
-    parameter_checks(anime, season, episode, threads, path, proxy_ip)
+    parameter_checks(anime, season, episode, threads, path, proxy)
     startup(anime=anime, season=season, episode=episode, threads_amount=threads, path=path, proxy=proxy)
 
 if __name__ == '__main__':
