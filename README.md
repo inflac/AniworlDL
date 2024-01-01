@@ -44,12 +44,12 @@ options:
 | VOE               | ❌        |
 | Doodstream        | ❌        |
 | Vidoza            | ✅        |
-| Streamtape        | ✅        |
+| Streamtape        | ✅  working      |
 
 ## ToDo
 | Feature           | Status      |
 |-------------------|-------------|
-| VOE               | working     |
+| VOE               | working on  |
 | Doodstream        | not planned |
 | movies            | planned     |
 | languages         | planned     |
