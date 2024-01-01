@@ -14,6 +14,7 @@ A multithreading anime downloader for aniworld.to. Simply download a single epis
 1) Clone this repository `git clone https://github.com/inflac/AniworlDL.git` or downloaded the ZIP file
 2) Move into the AniwolDL folder
 3) Install the necessary requirements with `pip install -r requirements.txt`
+4) Start the program from the command line or by using the .exe executable
 * [EXE] Start the downloader by double clicking the main.exe file
 * [CLI] Start the downloader with `python main.py -a anime_name -s season_number -t amount_of_threads -p path/where/to/store/the/files`
 
