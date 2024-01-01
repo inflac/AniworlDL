@@ -53,4 +53,4 @@ options:
 | Doodstream        | not planned |
 | movies            | planned     |
 | languages         | planned     |
-| proxy support     | planned     |
+| proxy support     | unstable    |
