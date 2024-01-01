@@ -52,3 +52,7 @@ options:
 | movies            | planned     |
 | languages         | planned     |
 | proxy support     | unstable    |
+
+## Existing downloader
+This project was created to practice thread-safe programming and to have a way to download my favorite anime. I didn't see until very late that there is already another project that allows the download of content from aniworld.to. Nevertheless, I will finish this project. 
+Take a look at the much more advanced, existing aniworld.to scraper: https://github.com/wolfswolke/aniworld_scraper
