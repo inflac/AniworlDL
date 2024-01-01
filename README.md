@@ -17,6 +17,7 @@ A multithreading anime downloader for aniworld.to. Simply download a single epis
 
 EXE:
 4) Start the downloader by double clicking the main.exe file
+
 CLI:
 4) Start the downloader with `python main.py -a anime_name -s season_number -t amount_of_threads -p path/where/to/store/the/files`
 
