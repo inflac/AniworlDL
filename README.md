@@ -1,11 +1,12 @@
 # AniworlDL
+```
   ___        _                    _______ _     
  / _ \      (_)                  | |  _  \ |    
 / /_\ \_ __  ___      _____  _ __| | | | | |    
 |  _  | '_ \| \ \ /\ / / _ \| '__| | | | | |    
 | | | | | | | |\ V  V / (_) | |  | | |/ /| |____
 \_| |_/_| |_|_| \_/\_/ \___/|_|  |_|___/ \_____/
-                                                
+```                                          
                                                 
 A multithreading anime downloader for aniworld.to. Simply download a single episode or an complete anime.
 
