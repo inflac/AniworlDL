@@ -42,7 +42,7 @@ options:
 | VOE               | ❌        |
 | Doodstream        | ❌        |
 | Vidoza            | ✅        |
-| Streamtape        | ✅  working      |
+| Streamtape        | ✅        |
 
 ## ToDo
 | Feature           | Status      |
